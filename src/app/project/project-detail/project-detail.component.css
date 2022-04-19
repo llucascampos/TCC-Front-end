@@ -1,0 +1,12 @@
+mat-action-row div button {
+    margin: 0px 10px;
+}
+
+.button-action button {
+    margin: 0px 10px;
+}
+
+.box {
+    border: 1px solid #2A0C9C;
+    border-radius: 10px;
+}

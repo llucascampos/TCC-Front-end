@@ -1,0 +1,80 @@
+<div>
+
+    <section>
+        <h2>Projetos</h2>
+    </section>
+
+
+
+    <div *ngIf="projects | async as projects else notProject">
+
+        <section class="container" style="justify-content: space-between;">
+            <div style="width: 50%;">
+                <mat-form-field class="" appearance="fill" style="width: 100%;">
+                    <mat-label>Pesquisar projeto por nome: </mat-label>
+                    <input matInput type="text" [(ngModel)]="projectSearch" (keyup.enter)="getProjectByName()">
+                    <button *ngIf="projectSearch" matSuffix mat-icon-button aria-label="Clear" (click)="getProjects()">
+                      <mat-icon>close</mat-icon>
+                    </button>
+                </mat-form-field>
+            </div>
+            <div>
+                <button mat-fab color="primary" (click)="openDialogNewProject()">
+                  <mat-icon>add</mat-icon>
+                </button>
+            </div>
+        </section>
+
+        <section *ngFor="let project of projects">
+            <mat-card style="margin: 20px 0px;" [ngStyle]="totalLateTask(project?.phases) > 0 && {'border': 'solid red 0.2px'}">
+                <mat-card-title>{{project.name}}</mat-card-title>
+                <mat-card-subtitle>{{project?.status?.name}}</mat-card-subtitle>
+                <div style="margin-bottom: 10px;">
+                    <p> {{project?.description}}</p>
+                </div>
+
+                <mat-card-content>
+                    <div class="container" style="justify-content: space-evenly;">
+                        <div>
+                            <h4>Data de Criação</h4>
+                            {{project?.startDate | date: 'dd/MM/yyyy'}}
+                        </div>
+                        <div>
+                            <h4>Gerente Responsável</h4>
+                            {{project?.manager?.name}}
+                        </div>
+                        <div>
+                            <h4>Nº de fases</h4>
+                            {{project.phases.length}}
+                        </div>
+
+                        <!-- <div>
+                            <h4>Tarefas atrasadas:</h4>
+                            {{totalLateTask(project?.phases) || 0}}
+                        </div> -->
+                    </div>
+
+                </mat-card-content>
+                <mat-card-actions align="end">
+                    <button mat-button (click)="projectDetail(project.id)">Detalhes</button>
+                    <button mat-button (click)="openDialogNewProject(project)">Editar</button>
+                </mat-card-actions>
+            </mat-card>
+        </section>
+    </div>
+
+    <ng-template #notProject>
+        <div style="margin-top: 100px;">
+            <mat-card style="text-align: center; padding: 50px;">
+                <span>
+                Não existe projetos para exibir, <br>
+                <strong><a (click)="openDialogNewProject()">clique aqui</a></strong> 
+                para criar um novo projeto
+            </span>
+            </mat-card>
+        </div>
+    </ng-template>
+
+
+
+</div>

@@ -1,0 +1,71 @@
+<div>
+
+    <div class="container" style="justify-content: space-between;">
+        <div style="width: 70%;">
+            <mat-form-field class="" appearance="fill" style="width: 100%;">
+                <mat-label>Pesquisar usuário por e-mail</mat-label>
+                <input matInput type="text" [(ngModel)]="userEmailSearch" (keyup.enter)="getUserByEmail()">
+                <button *ngIf="userEmailSearch" matSuffix mat-icon-button aria-label="Clear" (click)="getUsers()">
+                  <mat-icon>close</mat-icon>
+                </button>
+            </mat-form-field>
+        </div>
+
+        <div style="float: right;">
+            <button mat-fab color="primary" (click)="openDialogNewUser()">
+              <mat-icon>add</mat-icon>
+            </button>
+        </div>
+    </div>
+
+    <div>
+        <table mat-table [dataSource]="users" class="mat-elevation-z8" style="width: 100%;">
+
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> Nome </th>
+                <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef> Email </th>
+                <td mat-cell *matCellDef="let element"> {{element.email}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="telephone">
+                <th mat-header-cell *matHeaderCellDef> Telefone </th>
+                <td mat-cell *matCellDef="let element"> {{element.telephoneNumber}} </td>
+            </ng-container>
+
+            <!-- <ng-container matColumnDef="occupation">
+                <th mat-header-cell *matHeaderCellDef> Cargo </th>
+                <td mat-cell *matCellDef="let element"> {{element.occupation}} </td>
+            </ng-container> -->
+
+            <ng-container matColumnDef="perfil">
+                <th mat-header-cell *matHeaderCellDef> Perfil </th>
+                <td mat-cell *matCellDef="let element"> {{element.perfilUser}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="projeto">
+                <th mat-header-cell *matHeaderCellDef> Projeto </th>
+                <td mat-cell *matCellDef="let element"> {{element.projectName}} </td>
+            </ng-container>
+
+
+            <ng-container matColumnDef="options">
+                <th mat-header-cell *matHeaderCellDef> Opções </th>
+                <td mat-cell *matCellDef="let element">
+                    <button mat-icon-button aria-label="Editar" (click)="openDialogNewUser(element)">
+                        <mat-icon>mode_edit</mat-icon>
+                      </button>
+                    <button mat-icon-button aria-label="Excluir" (click)="openDialogDelete(element)">
+                        <mat-icon>delete</mat-icon>
+                      </button>
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </div>
+</div>

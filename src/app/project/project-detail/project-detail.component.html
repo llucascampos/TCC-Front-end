@@ -1,0 +1,163 @@
+<div>
+
+    <section style="margin-bottom: 40px;">
+        <div>
+            <span>Projeto</span>
+        </div>
+        <div class="container" style="justify-content:space-between;">
+            <div>
+                <h2>{{project?.name}}</h2>
+            </div>
+            <div style="margin-bottom: 20px;">
+
+                <button mat-raised-button (click)="openDialogMembers()">
+                    <mat-icon>groups</mat-icon>
+                    Visualizar equipe
+                </button>
+
+            </div>
+            <div *ngIf="project?.status?.id != 4">
+                <button mat-stroked-button color="warn" style="border: 1px solid red;" (click)="updateProject(4, project.id, 'project')">X Finalizar Projeto</button>
+            </div>
+        </div>
+    </section>
+
+
+    <section style="margin-bottom: 40px;">
+        <div>
+            <span>Fase</span>
+        </div>
+        <div class="container">
+            <button mat-raised-button color="primary" (click)="openDialogNewPhase()">
+                Criar fase
+                <mat-icon>add</mat-icon>
+            </button>
+            <button (click)="openDialogNewPhase(phaseActive)" mat-raised-button style="background-color: #585858; color: white; margin: 0px 15px;">
+                Editar
+                <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-raised-button color="warn" (click)="updateProject(4, phaseActive.id, 'phase')">
+                Finalizar fase X
+            </button>
+        </div>
+    </section>
+
+
+
+    <div *ngIf="phaseActive">
+
+        <section class="box">
+            <div class="container" style="width: 100%;  justify-content: space-around;">
+                <div>
+                    <h2>
+                        {{phaseActive.name}}
+                    </h2>
+                </div>
+                <div>
+                    <span>Status: <h3>{{phaseActive.status.name}}</h3></span>
+
+                </div>
+            </div>
+            <div class="container" style="width: 100%; justify-content: space-around;">
+                <div>
+                    <span>Descrição: {{phaseActive.description}}</span>
+                </div>
+                <div>
+                    <span>Data: {{phaseActive.startDate | date: 'dd/MM/yyyy'}}</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="box" style="background: rgba(42, 12, 156, 0.15);">
+            <div class="container" style="justify-content:flex-end; padding: 20px;">
+                <div style="width: 25%;">
+                    <span>
+                        <h3>TAREFAS</h3>
+                    </span>
+
+                </div>
+                <div style="width: 25%;">
+                    <button mat-button color="primary" (click)="openDialogNewTask()">
+                        + ADICIONAR NOVA TAREFA
+                    </button>
+                </div>
+            </div>
+        </section>
+        <section class="box">
+            <div style="margin-top: 0px;" *ngIf="phaseActive.tasks.length != 0">
+                <mat-accordion *ngFor="let task of phaseActive?.tasks">
+                    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" style="margin: 10px 0px;">
+                        <mat-expansion-panel-header>
+
+                            <div style="width: 50%;">
+                                {{task?.title}}
+                            </div>
+                            <div style="width: 30%;">
+                                <mat-icon>account_circle</mat-icon>
+                                {{task?.user?.name}}
+                            </div>
+                            <div style="width: 20%;" [ngStyle]="task?.status?.id == 7 && {'color': 'red'}">
+                                {{task?.status?.name}}
+                            </div>
+
+                        </mat-expansion-panel-header>
+                        <div class="container" style="justify-content: space-evenly;">
+                            <div>
+                                <p>Data de criação:</p>
+                                <h3>{{task.createDate | date: 'dd/MM/yyyy'}}</h3>
+                            </div>
+                            <div>
+                                <p>previsão para concluir:</p>
+                                <h3>{{task.expectedEndDate | date: 'dd/MM/yyyy'}}</h3>
+                            </div>
+                            <div>
+                                <p>prioridade:</p>
+                                <h3>{{task?.priorityLevel?.name}}</h3>
+                            </div>
+                        </div>
+
+                        <div>
+                            <p>Descrição:</p>
+                            <h3>{{task?.description}}</h3>
+                        </div>
+
+                        <mat-action-row *ngIf="phaseActive.status.id != 4">
+                            <button mat-button color="primary" (click)="updateProject(2, task.id, 'task')">Iniciar</button>
+                            <button mat-button color="primary" (click)="updateProject(4, task.id, 'task')">Finalizar</button>
+                            <button mat-button color="primary" (click)="openDialogNewTask(task)">Editar</button>
+                        </mat-action-row>
+                    </mat-expansion-panel>
+                </mat-accordion>
+            </div>
+        </section>
+
+
+    </div>
+
+    <section>
+        <div class="container" style="justify-content: flex-end; margin-top: 50px;">
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Visualizar outra fase</mat-label>
+                    <mat-select [(ngModel)]="selectedPhase" name="phase">
+                        <mat-option *ngFor="let phase of project?.phases" [value]="phase.id" (click)="selectOtherPhase(phase.id)">
+                            {{phase?.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+    </section>
+
+    <div *ngIf="!phaseActive" style="margin-top: 100px;">
+        <mat-card style="text-align: center; padding: 50px;">
+            <span>
+                Não existe nenhuma fase ativa para esse projeto, <br>
+                <strong><a (click)="openDialogNewPhase()">clique aqui</a></strong> 
+                para iniciar
+            </span>
+        </mat-card>
+    </div>
+
+
+</div>

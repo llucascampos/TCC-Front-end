@@ -1,0 +1,24 @@
+<section>
+    <h1>Olá, {{userName}}</h1>
+</section>
+
+
+<section>
+    <div class="" style=" justify-content: space-evenly; margin-top: 100px; text-align: center;">
+        <mat-card (click)="goProject(infoHome.projectId)">
+            <div>
+                <h4>Projeto Atual</h4>
+                <h2>{{infoHome?.project || "Sem projeto associado"}}</h2>
+            </div>
+        </mat-card>
+
+
+        <mat-card>
+            <div>
+                <h4>Notificações</h4>
+                <h2>{{infoHome?.nNotification || 0}}</h2>
+            </div>
+        </mat-card>
+    </div>
+
+</section>

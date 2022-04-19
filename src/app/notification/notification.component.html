@@ -1,0 +1,26 @@
+<div>
+    <div>
+        <h2>
+            Suas notificações
+        </h2>
+    </div>
+
+
+    <div *ngIf="notifications | async as notifications else notNotification">
+
+        <mat-list>
+            <div mat-subheader>Novidades</div>
+            <mat-list-item *ngFor="let notification of notifications">
+                <mat-icon mat-list-icon>notifications</mat-icon>
+                <div mat-line>{{notification.message}}</div>
+                <div mat-line> {{notification.createDate | date: 'dd/MM/yyyy'}} </div>
+                <mat-divider></mat-divider>
+            </mat-list-item>
+        </mat-list>
+    </div>
+
+    <ng-template #notNotification style="width: 100%; text-align: center; margin: auto;">
+        <h3>Sem notificações</h3>
+    </ng-template>
+
+</div>

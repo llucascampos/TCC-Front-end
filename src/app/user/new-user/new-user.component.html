@@ -1,0 +1,57 @@
+<div style=" text-align: center;">
+
+    <h2>{{title}}</h2>
+
+    <div style="margin: auto; ">
+        <form [formGroup]="formNewUser" class="formNewUser">
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Nome</mat-label>
+                    <input matInput required formControlName="name">
+                    <mat-error *ngIf="formNewUser.controls.name.errors">Campos obrigatório</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>E-mail</mat-label>
+                    <input matInput required formControlName="email">
+                    <mat-error *ngIf="formNewUser.controls.email.errors">Campos inválido</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Telefone</mat-label>
+                    <input matInput required formControlName="telephoneNumber" mask="(00) 0 0000-0000">
+                    <mat-error *ngIf="formNewUser.controls.telephoneNumber.errors">Campos obrigatório</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Perfil</mat-label>
+                    <mat-select formControlName="perfilUser" required>
+                        <mat-option *ngFor="let perfil of perfis" [value]="perfil.id">
+                            {{perfil.name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="formNewUser.controls.telephoneNumber.errors">Campos obrigatório</mat-error>
+                </mat-form-field>
+            </div>
+
+            <!-- <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Cargo</mat-label>
+                    <input matInput required formControlName="occupation">
+                   <mat-error *ngIf="email.invalid">{{getErrorMessage()}}</mat-error>
+                </mat-form-field>
+            </div> -->
+        </form>
+
+        <div class="container" style="justify-content: space-evenly;">
+            <button mat-button mat-dialog-close>Cancelar</button>
+            <button mat-button type="submit" [mat-dialog-close]="true" (click)="registerNewUser()">{{textButton}}</button>
+        </div>
+    </div>
+</div>

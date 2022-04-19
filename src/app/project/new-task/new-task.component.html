@@ -1,0 +1,60 @@
+<div style=" text-align: center;">
+
+    <h2>{{title}}</h2>
+
+    <div style="margin: auto;">
+        <form [formGroup]="formNewTask" class="formNewTask">
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Nome</mat-label>
+                    <input matInput required formControlName="title">
+                    <mat-error *ngIf="formNewTask.controls.title.errors">Campos obrigatório</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div>
+                <mat-form-field style="width: 90%;" class="example-full-width" appearance="fill">
+                    <mat-label>Data prevista para concluir</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="expectedEndDate">
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+
+            </div>
+
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Atribuir para:</mat-label>
+                    <mat-select formControlName="user">
+                        <mat-option *ngFor="let user of users" [value]="user">{{user.name}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="formNewTask.controls.user.errors">Campos obrigatório</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Prioridade:</mat-label>
+                    <mat-select formControlName="priorityLevel">
+                        <mat-option *ngFor="let priority of prioritys" [value]="priority">{{priority.name}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="formNewTask.controls.priorityLevel.errors">Campos obrigatório</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Descrição</mat-label>
+                    <textarea matInput required formControlName="description"></textarea>
+                    <mat-error *ngIf="formNewTask.controls.description.errors">Campos obrigatório</mat-error>
+                </mat-form-field>
+            </div>
+
+        </form>
+
+        <div class="container" style="justify-content: space-evenly;">
+            <button mat-button mat-dialog-close>Cancelar</button>
+            <button mat-button type="submit" [mat-dialog-close]="true" (click)="registerNewTask()">{{textButton}}</button>
+        </div>
+    </div>
+</div>
